@@ -161,3 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
     drawTrends();
     registerServiceWorker();
 });
+
+function exportPDF() {
+    const url = `https://budgetflow-631y.onrender.com/monthly-report/?month={{ selected_month }}&format=pdf`;
+    if (window.Capacitor) {
+        window.open(url, '_system');
+    } else {
+        window.open(url, '_blank');
+    }
+}
