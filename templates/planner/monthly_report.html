@@ -153,11 +153,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
 <script>
     document.getElementById("downloadPdf").addEventListener("click", () => {
-        if (window.Capacitor) {
-            // On mobile - open server PDF in system browser
-            window.open("https://budgetflow-631y.onrender.com/reports/monthly/?month={{ selected_month }}&format=pdf", "_system");
+        // Check if running inside Capacitor app OR mobile browser
+        const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+        const isCapacitor = window.Capacitor !== undefined;
+        
+        if (isMobile || isCapacitor) {
+            // Open as PDF directly in browser on mobile
+            window.location.href = "{% url 'monthly_report' %}?month={{ selected_month }}&format=pdf";
         } else {
-            // On desktop - use html2pdf as before
+            // Desktop - use html2pdf
             const report = document.getElementById("reportPage");
             html2pdf().set({
                 margin: 10,
