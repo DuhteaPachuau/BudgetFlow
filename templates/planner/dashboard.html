@@ -9,7 +9,7 @@
     <form>
         <input type="month" name="month" value="{{ selected_month }}" onchange="this.form.submit()">
     </form>
-<a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}&format=pdf" onclick="if(window.Capacitor){event.preventDefault(); exportPDF();}">Export PDF</a></section>
+<a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}&format=pdf" onclick="if(window.Capacitor){event.preventDefault(); window.open('https://budgetflow-631y.onrender.com/reports/monthly/?month={{ selected_month }}&format=pdf', '_system');}">Export PDF</a>
 
 <section class="metrics">
     <article class="metric green"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></article>
@@ -42,4 +42,11 @@
         </div>
     </article>
 </section>
+
+<script>
+function exportPDF() {
+    const url = `https://budgetflow-631y.onrender.com/reports/monthly/?month={{ selected_month }}&format=pdf`;
+    window.open(url, '_system');
+}
+</script>
 {% endblock %}
