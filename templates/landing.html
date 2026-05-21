@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}BudgetFlow - Budget Planner{% endblock %}
+{% block body %}
+<header class="landing-nav">
+    <a class="brand" href="/">BudgetFlow</a>
+    <nav>
+        <a class="ghost-btn" href="{% url 'login' %}">Login</a>
+        <a class="primary-btn" href="{% url 'register' %}">Sign Up</a>
+    </nav>
+</header>
+
+<main class="landing">
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow">Dark finance dashboard</span>
+            <h1>BudgetFlow</h1>
+            <p class="tagline">Plan bills, track spending, forecast savings, and catch money surprises before they happen.</p>
+            <a class="primary-btn large" href="{% url 'register' %}">Get started free</a>
+        </div>
+        <div class="mockup" aria-label="Budget dashboard preview">
+            <div class="mockup-top">
+                <span>May 2026</span>
+                <span class="status-dot"></span>
+            </div>
+            <div class="mock-grid">
+                <div class="mini-card green">Income<br><strong>₹5,200</strong></div>
+                <div class="mini-card red">Expenses<br><strong>₹2,140</strong></div>
+                <div class="mini-card purple">Rate<br><strong>35.7%</strong></div>
+            </div>
+            <div class="mock-body">
+                <div class="donut"></div>
+                <div class="mock-list">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <article>
+            <span class="feature-icon">01</span>
+            <h2>Track bills</h2>
+            <p>Rent, EMI, utilities, Netflix, Spotify, Amazon, and every recurring payment stay visible.</p>
+        </article>
+        <article>
+            <span class="feature-icon">02</span>
+            <h2>Auto savings</h2>
+            <p>See savings after expenses and paid bills, plus a forecast with pending bills included.</p>
+        </article>
+        <article>
+            <span class="feature-icon">03</span>
+            <h2>Smart alerts</h2>
+            <p>Overdue bills turn red, bills due within three days turn yellow, so nothing slips.</p>
+        </article>
+    </section>
+
+    <section class="cta-band">
+        <div>
+            <h2>Start with a free personal dashboard.</h2>
+            <p>SQLite-backed, private by user, and ready to install as an Android app.</p>
+        </div>
+        <a class="primary-btn" href="{% url 'register' %}">Get started free</a>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "planner/layout.html" %}
+{% block title %}All Bills - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div><p class="eyebrow">Manual + Gmail</p><h1>All Bills</h1></div>
+    <div class="head-actions">
+        <a class="ghost-btn" href="{% url 'bill_add' %}">Add Manual Bill</a>
+        <a class="ghost-btn" href="{% url 'gmail_import' %}">Import from Gmail</a>
+        <div class="forecast">Pending forecast: <strong>₹{{ forecast|floatformat:2 }}</strong></div>
+    </div>
+</section>
+
+<article class="panel">
+    <div class="panel-head">
+        <h2>All bill records</h2>
+        <span>{{ items|length }} total</span>
+    </div>
+    {% for item in items %}
+        <div class="row-item bill-row {{ item.alert_level }}">
+            <div>
+                <strong>{{ item.name }}</strong>
+                <span>{{ item.service }} - {{ item.category }} - due {{ item.due_date }} - {{ item.source|title }}{% if item.is_paid %} - Paid{% else %} - Pending{% endif %}</span>
+                {% if item.email_subject %}<span>{{ item.email_subject }}</span>{% endif %}
+            </div>
+            <strong>₹{{ item.amount|floatformat:2 }}</strong>
+            <div class="actions">
+                {% if not item.is_paid %}<a href="{% url 'bill_mark_paid' item.id %}">Mark paid</a>{% endif %}
+                <a href="{% url 'bill_edit' item.id %}">Edit</a>
+                <a href="{% url 'bill_delete' item.id %}">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="empty">No bills yet. Add one manually or import suggestions from Gmail.</p>
+    {% endfor %}
+</article>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% if form.errors %}
+<div class="message error">
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}<p>{{ error }}</p>{% endfor %}
+    {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,35 @@
+{% extends "planner/layout.html" %}
+{% block title %}Add Manual Bill - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Manual entry</p>
+        <h1>Add Manual Bill</h1>
+    </div>
+    <div class="head-actions">
+        <a class="ghost-btn" href="{% url 'bills' %}">View All Bills</a>
+        <a class="ghost-btn" href="{% url 'gmail_import' %}">Import from Gmail</a>
+    </div>
+</section>
+
+<section class="split">
+    <form class="panel form-panel" method="post">
+        {% csrf_token %}
+        {% include "partials/form_errors.html" %}
+        <h2>Bill details</h2>
+        <label>Name {{ form.name }}</label>
+        <label>Service {{ form.service }}</label>
+        <label>Amount (₹) {{ form.amount }}</label>
+        <label>Due date {{ form.due_date }}</label>
+        <label>Category {{ form.category }}</label>
+        <label class="check">{{ form.is_recurring }} Recurring bill</label>
+        <button class="primary-btn full" type="submit">Save manual bill</button>
+    </form>
+
+    <article class="panel">
+        <h2>When to use this</h2>
+        <p class="empty">Use manual bill entry for rent, EMI, electricity, water, cash payments, or any bill that does not appear in Gmail.</p>
+        <p class="empty">After saving, it appears on All Bills with Gmail-imported bills. Pending bills reduce forecast savings, and paid bills reduce current savings.</p>
+    </article>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "planner/layout.html" %}
+{% block title %}{{ title }} - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head"><div><p class="eyebrow">Edit</p><h1>{{ title }}</h1></div></section>
+<form class="panel form-panel narrow" method="post">
+    {% csrf_token %}
+    {% include "partials/form_errors.html" %}
+    {% for field in form %}
+        <label>{{ field.label }} {{ field }}</label>
+    {% endfor %}
+    <button class="primary-btn full" type="submit">Save changes</button>
+</form>
+{% endblock %}

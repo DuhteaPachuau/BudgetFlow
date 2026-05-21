@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ selected_label }} Budget Report</title>
+    <style>
+        body {
+            color: #111827;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 32px;
+        }
+        header {
+            align-items: flex-start;
+            border-bottom: 2px solid #111827;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+        }
+        h1, h2 { margin: 0; }
+        h2 { font-size: 18px; margin: 28px 0 12px; }
+        .muted { color: #6b7280; }
+        .metrics {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 24px;
+        }
+        .metric {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .metric span {
+            color: #6b7280;
+            display: block;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .metric strong { font-size: 20px; }
+        table {
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            width: 100%;
+        }
+        th, td {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px 8px;
+            text-align: left;
+        }
+        th {
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .right { text-align: right; }
+        .print-actions {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .report-page {
+            background: white;
+        }
+        button {
+            background: #111827;
+            border: 0;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 10px 14px;
+        }
+        @media print {
+            .print-actions { display: none; }
+            body { padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-actions">
+        <button id="downloadPdf" type="button">Download PDF</button>
+        <button onclick="window.print()" type="button">Print</button>
+    </div>
+
+    <main id="reportPage" class="report-page">
+        <header>
+            <div>
+                <h1>BudgetFlow Report</h1>
+                <p class="muted">{{ selected_label }}</p>
+            </div>
+            <div class="muted">Generated {{ generated_at }}</div>
+        </header>
+
+        <section class="metrics">
+            <div class="metric"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></div>
+            <div class="metric"><span>Total Expenses</span><strong>₹{{ dashboard_expense_total|floatformat:2 }}</strong></div>
+            <div class="metric"><span>Savings</span><strong>₹{{ savings|floatformat:2 }}</strong></div>
+            <div class="metric"><span>Forecast</span><strong>₹{{ forecast|floatformat:2 }}</strong></div>
+        </section>
+
+        <h2>Income</h2>
+        <table>
+            <thead><tr><th>Source</th><th>Date</th><th class="right">Amount</th></tr></thead>
+            <tbody>
+                {% for item in incomes %}
+                    <tr><td>{{ item.source }}</td><td>{{ item.date }}</td><td class="right">₹{{ item.amount|floatformat:2 }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="3">No income recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Regular Expenses</h2>
+        <table>
+            <thead><tr><th>Name</th><th>Category</th><th>Date</th><th class="right">Amount</th></tr></thead>
+            <tbody>
+                {% for item in expenses %}
+                    <tr><td>{{ item.name }}</td><td>{{ item.category }}</td><td>{{ item.date }}</td><td class="right">₹{{ item.amount|floatformat:2 }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="4">No regular expenses recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Paid Bills</h2>
+        <table>
+            <thead><tr><th>Name</th><th>Category</th><th>Due Date</th><th>Source</th><th class="right">Amount</th></tr></thead>
+            <tbody>
+                {% for item in paid_bills %}
+                    <tr><td>{{ item.name }}</td><td>{{ item.category }}</td><td>{{ item.due_date }}</td><td>{{ item.source|title }}</td><td class="right">₹{{ item.amount|floatformat:2 }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="5">No paid bills recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Pending Bills</h2>
+        <table>
+            <thead><tr><th>Name</th><th>Category</th><th>Due Date</th><th>Source</th><th class="right">Amount</th></tr></thead>
+            <tbody>
+                {% for item in pending_bills %}
+                    <tr><td>{{ item.name }}</td><td>{{ item.category }}</td><td>{{ item.due_date }}</td><td>{{ item.source|title }}</td><td class="right">₹{{ item.amount|floatformat:2 }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="5">No pending bills recorded.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
+    <script>
+        document.getElementById("downloadPdf").addEventListener("click", () => {
+            const report = document.getElementById("reportPage");
+            html2pdf().set({
+                margin: 10,
+                filename: "budgetflow-{{ selected_month }}.pdf",
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+            }).from(report).save();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% extends "planner/layout.html" %}
+{% block title %}Profile - BudgetFlow{% endblock %}
+{% block content %}
+<section class="profile-hero premium">
+    <div class="profile-avatar-wrap">
+        <div class="profile-avatar">{{ request.user.name|default:request.user.email|first|upper }}</div>
+        <span class="online-dot"></span>
+    </div>
+    <div class="profile-title">
+        <p class="eyebrow">Account center</p>
+        <h1>{{ request.user.name|default:"Your Profile" }}</h1>
+        <p>{{ request.user.email }}</p>
+    </div>
+    <div class="profile-hero-actions">
+        <a class="ghost-btn" href="{% url 'monthly_report' %}">Export Report</a>
+        <a class="ghost-btn" href="{% url 'logout' %}" data-logout-link>Logout</a>
+    </div>
+</section>
+
+<section class="profile-stats">
+    <article><span>Income records</span><strong>{{ income_count }}</strong></article>
+    <article><span>Expense records</span><strong>{{ expense_count }}</strong></article>
+    <article><span>Bill records</span><strong>{{ bill_count }}</strong></article>
+    <article><span>Member since</span><strong>{{ joined_label }}</strong></article>
+</section>
+
+<section class="profile-grid polished">
+    <form class="panel form-panel" method="post">
+        {% csrf_token %}
+        {% include "partials/form_errors.html" %}
+        <div class="panel-head">
+            <h2>Personal details</h2>
+            <span>Editable</span>
+        </div>
+        <label>Name {{ form.name }}</label>
+        <label>Email {{ form.email }}</label>
+        <button class="primary-btn full" type="submit">Save profile</button>
+    </form>
+
+    <div class="profile-side">
+        <article class="panel">
+            <div class="panel-head">
+                <h2>Connected services</h2>
+            </div>
+            <div class="service-card">
+                <div class="service-icon google-logo"></div>
+                <div>
+                    <strong>Google login</strong>
+                    <span>{% if google_auth_ready %}Configured for sign in{% else %}Needs OAuth credentials{% endif %}</span>
+                </div>
+                <span class="status-pill {% if google_auth_ready %}ok{% else %}warn{% endif %}">
+                    {% if google_auth_ready %}Ready{% else %}Setup{% endif %}
+                </span>
+            </div>
+            <div class="service-card">
+                <div class="service-icon mail-icon">M</div>
+                <div>
+                    <strong>Gmail bill import</strong>
+                    <span>{% if gmail_connected %}Connected in this session{% else %}Connect to scan bill alerts{% endif %}</span>
+                </div>
+                <a class="ghost-btn compact" href="{% url 'gmail_import' %}">
+                    {% if gmail_connected %}Manage{% else %}Connect{% endif %}
+                </a>
+            </div>
+        </article>
+
+        <article class="panel privacy-card">
+            <h2>Privacy</h2>
+            <p class="empty">Your income, expenses, and bills are filtered by your account. Gmail suggestions are reviewed before anything is added to your budget.</p>
+            <div class="privacy-list">
+                <span>Private user data</span>
+                <span>Review before import</span>
+                <span>Local SQLite storage</span>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

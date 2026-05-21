@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-head">
+            <a class="brand" href="{% url 'dashboard' %}">BudgetFlow</a>
+            <button class="icon-btn close-menu" data-close-menu type="button" aria-label="Close navigation menu">X</button>
+        </div>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'income' %}">Income</a>
+            <a href="{% url 'expenses' %}">Expenses</a>
+            <a href="{% url 'bills' %}">All Bills</a>
+            <a href="{% url 'bill_add' %}">Add Manual Bill</a>
+            <a href="{% url 'gmail_import' %}">Gmail Bills</a>
+            <a href="{% url 'trends' %}">Trends</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}" data-logout-link>Logout</a>
+        </nav>
+    </aside>
+    <main class="content">
+        <header class="mobile-top">
+            <a class="brand" href="{% url 'dashboard' %}">BudgetFlow</a>
+            <button class="icon-btn" data-toggle-menu type="button">Menu</button>
+        </header>
+        {% if messages %}
+            <div class="messages">{% for message in messages %}<p class="message">{{ message }}</p>{% endfor %}</div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+<div class="modal-backdrop" data-logout-modal hidden>
+    <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="logoutTitle">
+        <h2 id="logoutTitle">Logout?</h2>
+        <p>Are you sure you want to end this session?</p>
+        <div class="modal-actions">
+            <button class="ghost-btn" type="button" data-cancel-logout>Cancel</button>
+            <a class="primary-btn" href="{% url 'logout' %}" data-confirm-logout>Yes, logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

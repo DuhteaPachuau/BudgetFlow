@@ -1,0 +1,46 @@
+{% extends "planner/layout.html" %}
+{% block title %}Dashboard - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Dashboard</p>
+        <h1>{{ selected_label }}</h1>
+    </div>
+    <form>
+        <input type="month" name="month" value="{{ selected_month }}" onchange="this.form.submit()">
+    </form>
+    <a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}" target="_blank">Export PDF</a>
+</section>
+
+<section class="metrics">
+    <article class="metric green"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></article>
+    <article class="metric red"><span>Total Expenses</span><strong>₹{{ dashboard_expense_total|floatformat:2 }}</strong></article>
+    <article class="metric green"><span>Savings</span><strong>₹{{ savings|floatformat:2 }}</strong></article>
+    <article class="metric purple"><span>Savings Rate</span><strong>{{ savings_rate|floatformat:1 }}%</strong></article>
+</section>
+
+<section class="dashboard-grid">
+    <article class="panel">
+        <div class="panel-head">
+            <h2>Spending by category</h2>
+        </div>
+        <canvas id="categoryDonut" data-labels='{{ category_labels|safe }}' data-values='{{ category_values|safe }}'></canvas>
+    </article>
+    <article class="panel">
+        <div class="panel-head">
+            <h2>Smart alerts</h2>
+            <span>Forecast ₹{{ forecast|floatformat:2 }}</span>
+        </div>
+        <div class="alert-list">
+            {% for bill in alerts %}
+                <div class="alert {{ bill.alert_level }}">
+                    <strong>{{ bill.name }}</strong>
+                    <span>₹{{ bill.amount|floatformat:2 }} due {{ bill.due_date }}</span>
+                </div>
+            {% empty %}
+                <div class="empty">No pending bill alerts.</div>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+{% endblock %}

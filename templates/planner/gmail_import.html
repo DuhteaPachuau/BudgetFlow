@@ -1,0 +1,52 @@
+{% extends "planner/layout.html" %}
+{% block title %}Gmail Bills - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Email alerts</p>
+        <h1>Gmail Bill Import</h1>
+    </div>
+    {% if is_connected %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="scan">
+            <button class="primary-btn" type="submit">Scan Gmail</button>
+        </form>
+    {% else %}
+        <a class="primary-btn" href="{% url 'gmail_connect' %}">Connect Gmail</a>
+    {% endif %}
+</section>
+
+<article class="panel">
+    {% if not is_configured %}
+        <div class="message error">
+            Add Google OAuth credentials before connecting Gmail:
+            <strong>GOOGLE_CLIENT_ID</strong>, <strong>GOOGLE_CLIENT_SECRET</strong>, and optional <strong>GOOGLE_REDIRECT_URI</strong>.
+        </div>
+    {% endif %}
+
+    <h2>Suggested bills</h2>
+    <p class="empty">BudgetFlow scans recent Gmail messages for bill, invoice, due date, payment, and subscription alerts. Review suggestions before adding them.</p>
+
+    <form method="post" class="suggestions">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add">
+        {% for item in suggestions %}
+            <label class="suggestion-card">
+                <input type="checkbox" name="message_id" value="{{ item.message_id }}" checked>
+                <span>
+                    <strong>{{ item.service }} - ₹{{ item.amount }}</strong>
+                    <small>{{ item.category }} - due {{ item.due_date }}</small>
+                    <em>{{ item.subject }}</em>
+                    <small>{{ item.snippet }}</small>
+                </span>
+            </label>
+        {% empty %}
+            <div class="empty">No suggestions yet. Connect Gmail, then scan.</div>
+        {% endfor %}
+        {% if suggestions %}
+            <button class="primary-btn" type="submit">Add selected bills</button>
+        {% endif %}
+    </form>
+</article>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "planner/layout.html" %}
+{% block title %}Trends - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div><p class="eyebrow">Yearly view</p><h1>Trends</h1></div>
+    <form class="inline-form">
+        <input type="number" name="year" value="{{ year }}" min="2000" max="2100">
+        <button class="primary-btn" type="submit">Filter</button>
+    </form>
+</section>
+<article class="panel chart-panel">
+    <canvas id="trendsChart" data-labels='{{ trend_labels|safe }}' data-income='{{ trend_income|safe }}' data-expenses='{{ trend_expenses|safe }}' data-bills='{{ trend_bills|safe }}' data-savings='{{ trend_savings|safe }}'></canvas>
+</article>
+{% endblock %}

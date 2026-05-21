@@ -1,0 +1,26 @@
+{% extends "planner/layout.html" %}
+{% block title %}Income - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head"><div><p class="eyebrow">Money in</p><h1>Income</h1></div></section>
+<section class="split">
+    <form class="panel form-panel" method="post">
+        {% csrf_token %}
+        {% include "partials/form_errors.html" %}
+        <h2>Add income</h2>
+        <label>Source {{ form.source }}</label>
+        <label>Amount (₹) {{ form.amount }}</label>
+        <label>Date {{ form.date }}</label>
+        <button class="primary-btn full" type="submit">Save income</button>
+    </form>
+    <article class="panel">
+        <h2>Income history</h2>
+        {% for item in items %}
+            <div class="row-item">
+                <div><strong>{{ item.source }}</strong><span>{{ item.date }}</span></div>
+                <strong class="green-text">₹{{ item.amount|floatformat:2 }}</strong>
+                <div class="actions"><a href="{% url 'income_edit' item.id %}">Edit</a><a href="{% url 'income_delete' item.id %}">Delete</a></div>
+            </div>
+        {% empty %}<p class="empty">No income yet.</p>{% endfor %}
+    </article>
+</section>
+{% endblock %}

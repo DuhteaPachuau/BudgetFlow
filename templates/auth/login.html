@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login - BudgetFlow{% endblock %}
+{% block body %}
+<main class="auth-shell">
+    <form class="auth-card" method="post">
+        {% csrf_token %}
+        <a class="brand" href="/">BudgetFlow</a>
+        <h1>Welcome back</h1>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% include "partials/form_errors.html" %}
+        <a class="google-btn" href="{% url 'google_login' %}">
+            <span class="google-logo" aria-hidden="true"></span>
+            Continue with Google
+        </a>
+        <div class="auth-divider"><span>or</span></div>
+        <label>Email {{ form.email }}</label>
+        <label>Password {{ form.password }}</label>
+        <button class="primary-btn full" type="submit">Login</button>
+        <p>New here? <a href="{% url 'register' %}">Create an account</a></p>
+    </form>
+</main>
+{% endblock %}

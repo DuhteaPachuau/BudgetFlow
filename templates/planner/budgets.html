@@ -1,0 +1,41 @@
+{% extends "planner/layout.html" %}
+{% block title %}Budgets - BudgetFlow{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Monthly limits</p>
+        <h1>Budgets</h1>
+    </div>
+    <a class="ghost-btn" href="{% url 'dashboard' %}">Back to Dashboard</a>
+</section>
+
+<section class="split">
+    <form class="panel form-panel" method="post">
+        {% csrf_token %}
+        {% include "partials/form_errors.html" %}
+        <h2>Add category budget</h2>
+        <label>Category {{ form.category }}</label>
+        <label>Limit amount (₹) {{ form.amount }}</label>
+        <label>Month {{ form.month }}</label>
+        <button class="primary-btn full" type="submit">Save budget</button>
+    </form>
+
+    <article class="panel">
+        <h2>Saved budgets</h2>
+        {% for item in items %}
+            <div class="row-item">
+                <div>
+                    <strong>{{ item.category }}</strong>
+                    <span>{{ item.month|date:"F Y" }}</span>
+                </div>
+                <strong>₹{{ item.amount|floatformat:2 }}</strong>
+                <div class="actions">
+                    <a href="{% url 'budget_delete' item.id %}">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty">No budgets yet.</p>
+        {% endfor %}
+    </article>
+</section>
+{% endblock %}
