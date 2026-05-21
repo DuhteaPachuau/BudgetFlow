@@ -9,7 +9,8 @@
     <form>
         <input type="month" name="month" value="{{ selected_month }}" onchange="this.form.submit()">
     </form>
-<button type="button" class="ghost-btn" onclick="exportPDF()">Export PDF</button>
+<a class="ghost-btn" href="#" onclick="exportPDF(); return false;">Export PDF</a>
+
 <section class="metrics">
     <article class="metric green"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></article>
     <article class="metric red"><span>Total Expenses</span><strong>₹{{ dashboard_expense_total|floatformat:2 }}</strong></article>
