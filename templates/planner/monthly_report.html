@@ -150,9 +150,14 @@
         </table>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
-    <script>
-        document.getElementById("downloadPdf").addEventListener("click", () => {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.3/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById("downloadPdf").addEventListener("click", () => {
+        if (window.Capacitor) {
+            // On mobile - open server PDF in system browser
+            window.open("https://budgetflow-631y.onrender.com/reports/monthly/?month={{ selected_month }}&format=pdf", "_system");
+        } else {
+            // On desktop - use html2pdf as before
             const report = document.getElementById("reportPage");
             html2pdf().set({
                 margin: 10,
@@ -161,7 +166,8 @@
                 html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
             }).from(report).save();
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
