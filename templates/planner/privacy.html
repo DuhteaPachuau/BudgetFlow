@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Privacy Policy - BudgetFlow{% endblock %}
+{% block body %}
+<header class="landing-nav">
+    <a class="brand" href="/">BudgetFlow</a>
+    <nav>
+<a class="ghost-btn" href="{% url 'privacy' %}">Privacy</a>
+        <a class="ghost-btn" href="{% url 'login' %}">Login</a>
+        <a class="primary-btn" href="{% url 'register' %}">Sign Up</a>
+    </nav>
+</header>
+
+<main class="landing">
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow">Legal</span>
+            <h1>Privacy Policy</h1>
+            <p class="tagline">Last updated: May 21, 2026</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <article>
+            <span class="feature-icon">01</span>
+            <h2>Information We Collect</h2>
+            <p>BudgetFlow collects your Google account information (name, email) only for authentication purposes.</p>
+        </article>
+        <article>
+            <span class="feature-icon">02</span>
+            <h2>How We Use Your Data</h2>
+            <p>Your data is used only to provide the BudgetFlow service. We do not sell or share your data with third parties.</p>
+        </article>
+        <article>
+            <span class="feature-icon">03</span>
+            <h2>Gmail Access</h2>
+            <p>Gmail data is used only to import bill information you request. We do not store your Gmail credentials.</p>
+        </article>
+    </section>
+
+    <section class="cta-band">
+        <div>
+            <h2>Questions about your privacy?</h2>
+            <p>Contact us at: your@email.com</p>
+        </div>
+        <a class="primary-btn" href="{% url 'login' %}">Back to Login</a>
+    </section>
+</main>
+{% endblock %}

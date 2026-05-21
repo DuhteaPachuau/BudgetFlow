@@ -543,3 +543,7 @@ def profile_page(request):
         "joined_label": request.user.date_joined.strftime("%d %b %Y"),
     }
     return render(request, "planner/profile.html", context)
+
+
+def privacy_page(request):
+    return render(request, "planner/privacy.html")
