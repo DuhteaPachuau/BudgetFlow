@@ -9,7 +9,7 @@
     <form>
         <input type="month" name="month" value="{{ selected_month }}" onchange="this.form.submit()">
     </form>
-<a class="ghost-btn" href="#" onclick="exportPDF(); return false;">Export PDF</a>
+<a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}&format=pdf" onclick="if(window.Capacitor){event.preventDefault(); exportPDF();}">Export PDF</a></section>
 
 <section class="metrics">
     <article class="metric green"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></article>
