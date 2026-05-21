@@ -163,10 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function exportPDF() {
-    const url = `https://budgetflow-631y.onrender.com/monthly-report/?month={{ selected_month }}&format=pdf`;
+    const url = `https://budgetflow-631y.onrender.com/reports/monthly/?month={{ selected_month }}&format=pdf`;
     if (window.Capacitor) {
         window.open(url, '_system');
     } else {
         window.open(url, '_blank');
     }
 }
+
