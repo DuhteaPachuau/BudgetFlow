@@ -1,0 +1,25 @@
+{
+  "name": "build-a-budget-planner-web-app",
+  "version": "1.0.0",
+  "description": "A Django + pure HTML/CSS/JavaScript budget planner with a dark finance dashboard UI and rupee-based money display.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DuhteaPachuau/BudgetFlow/issues"
+  },
+  "homepage": "https://github.com/DuhteaPachuau/BudgetFlow#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/filesystem": "^8.1.2"
+  }
+}

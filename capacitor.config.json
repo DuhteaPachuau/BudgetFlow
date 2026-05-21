@@ -1,0 +1,9 @@
+{
+  "appId": "com.duhte.budgetflow",
+  "appName": "BudgetFlow",
+  "webDir": "www",
+  "server": {
+    "url": "https://budgetflow-631y.onrender.com",
+    "cleartext": false
+  }
+}

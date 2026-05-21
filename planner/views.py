@@ -259,6 +259,7 @@ def budget_delete(request, pk):
     return redirect("budgets")
 
 
+
 @login_required
 def monthly_report(request):
     selected = selected_month(request)
@@ -274,6 +275,16 @@ def monthly_report(request):
         "selected_label": month_label(selected),
         "generated_at": timezone.localtime(),
     }
+
+    if request.GET.get("format") == "pdf":
+        from django.template.loader import render_to_string
+        from weasyprint import HTML
+        html_string = render_to_string("planner/monthly_report.html", context, request=request)
+        pdf = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+        response = HttpResponse(pdf, content_type="application/pdf")
+        response["Content-Disposition"] = f'attachment; filename="budgetflow-{selected.strftime("%Y-%m")}.pdf"'
+        return response
+
     return render(request, "planner/monthly_report.html", context)
 
 

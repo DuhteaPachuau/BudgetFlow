@@ -9,8 +9,7 @@
     <form>
         <input type="month" name="month" value="{{ selected_month }}" onchange="this.form.submit()">
     </form>
-    <a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}" target="_blank">Export PDF</a>
-</section>
+<a class="ghost-btn" href="{% url 'monthly_report' %}?month={{ selected_month }}&format=pdf" target="_blank">Export PDF</a></section>
 
 <section class="metrics">
     <article class="metric green"><span>Total Income</span><strong>₹{{ income_total|floatformat:2 }}</strong></article>
