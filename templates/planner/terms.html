@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Terms of Service - BudgetFlow{% endblock %}
+{% block body %}
+<header class="landing-nav">
+    <a class="brand" href="/">BudgetFlow</a>
+    <nav>
+        <a class="ghost-btn" href="{% url 'privacy' %}">Privacy</a>
+        <a class="ghost-btn" href="{% url 'login' %}">Login</a>
+        <a class="primary-btn" href="{% url 'register' %}">Sign Up</a>
+    </nav>
+</header>
+
+<main class="landing">
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="eyebrow">Legal</span>
+            <h1>Terms of Service</h1>
+            <p class="tagline">Last updated: May 21, 2026</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <article>
+            <span class="feature-icon">01</span>
+            <h2>Use of Service</h2>
+            <p>BudgetFlow is a personal budget planning tool. You agree to use it only for lawful purposes and not to misuse or attempt to harm the service.</p>
+        </article>
+        <article>
+            <span class="feature-icon">02</span>
+            <h2>Your Data</h2>
+            <p>You own your data. BudgetFlow stores your financial data securely and never shares it with third parties.</p>
+        </article>
+        <article>
+            <span class="feature-icon">03</span>
+            <h2>Gmail Access</h2>
+            <p>When you connect Gmail, BudgetFlow only reads emails to find bill information. We never send emails, delete emails, or access any other Google services.</p>
+        </article>
+        <article>
+            <span class="feature-icon">04</span>
+            <h2>Disclaimer</h2>
+            <p>BudgetFlow is provided as-is. We are not responsible for any financial decisions made based on information in the app.</p>
+        </article>
+        <article>
+            <span class="feature-icon">05</span>
+            <h2>Changes</h2>
+            <p>We may update these terms at any time. Continued use of BudgetFlow means you accept the updated terms.</p>
+        </article>
+    </section>
+
+    <section class="cta-band">
+        <div>
+            <h2>Questions about our terms?</h2>
+            <p>Contact us at: duhteapachuau21@gmail.com</p>
+        </div>
+        <a class="primary-btn" href="{% url 'login' %}">Back to Login</a>
+    </section>
+</main>
+{% endblock %}

@@ -33,4 +33,5 @@ urlpatterns = [
     path("profile/", views.profile_page, name="profile"),
     path("service-worker.js", views.service_worker, name="service_worker"),
     path("privacy/", views.privacy_page, name="privacy"),
+    path("terms/", views.terms_page, name="terms"),
 ]

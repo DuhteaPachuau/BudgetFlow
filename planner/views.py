@@ -547,3 +547,6 @@ def profile_page(request):
 
 def privacy_page(request):
     return render(request, "planner/privacy.html")
+
+def terms_page(request):
+    return render(request, "planner/terms.html")
